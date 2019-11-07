@@ -1,0 +1,91 @@
+-----------------------------------------------------------------------------------------------------------------------------
+Hello there, in this small documentation i am going to give you some basic information about the flow of the work
+and also i am going to explain some difficulties that i felt and also the solutions that i used to remove those difficulties.
+-----------------------------------------------------------------------------------------------------------------------------
+
+I am creating this document to give refrences about the backend coding of the concerned task.
+It may be possible that due to some miss dependencies frontend may misbehaves so i am attaching snapshots 
+of postman(used to test the backend in terms of different routes),Robo3T(for collections in database) etc.
+The Navtech-assessment folder contains two folders for backend and frontend namely order-management-backend 
+and order-management-frontend respectively.
+
+In order-management-backend folder, I have created models(for creating schema for product,product category,
+user and order)for defining the mongoose schema in terms of different fields name with validation and types for each modelType.
+
+Also i have created routes folder that contains different routes for each component like auth,category,user,product,order 
+and each route js file contains different routing for different HTTP end-points or CRUD operations.
+
+There is also a controller folder that contains functions related to crud operation for each route.In every routes there are some 
+functions related to CRUD operations are used that are defined in each corresponding controller in controller function.
+
+There is also a helpers folder having a single file errorHandlers.js to handle the database related errors.
+
+There is a validator folder having index.js file which is intended to consolidate validation realted constraints while user signup and enter 
+email and password.
+
+Some npm packages used to develop the backend are as follows:
+
+1. "express":used for routing in the application.
+
+2. "mongoose":used as MongoDB object modeling tool for database connectivity.
+
+3. "morgan":used to print each and every request(API or endpoint call) on the console when we request using postman so it easy to intercept 
+	any potential error and it provides clarity with each request.
+	
+4. "body-parser":used for parsing incoming request bodies in a middleware.
+
+5. "cookie-parser":used to deal with cookies specially when we store token of authenticated user in localstorage.
+
+6. "cors": used to avoid error like cross origin resource sharing when different requests made form different port to a single api.
+
+7. "express-validator": used to validate fields while creating models for each component like user,product,category etc.
+
+8. "nodemon":used to restart the server automatically when we save the js file.
+
+and many more.
+
+--------------------------------------------------------------------------------------------------
+Now i am going to discuss some issues that i faced while creating the backend of this application
+--------------------------------------------------------------------------------------------------
+
+1. fileSize:
+	
+	I was created product model and using the relevant controller function, guided by corresponding route,the issue is to restrict the user to 
+	save or update image of relatively small size beacuse if image is larger in size then it will take time to load.
+	
+2. formdata:
+
+	While creating backend the main concern was to take data from frontend as the form data. So after some R&D i found that we can use a package
+	named "formidable" that has a built-in named IncomingForm() that return the form and also that package helped in keeping the extensions for
+	image file type.
+
+3. middlewares:
+
+	While creating or updating or deleting the new or existing product or product category,there was a catch that is a user not only be authenticated but
+	also must be an admin to do so. Due to which necessity of middleware came into existence before altering the existing value. In this case it was isAdmin 
+	middleware.
+	
+4. bearertoken:
+
+	For authenticating a user as a admin for testing a route in the postman we need to pass headers for authorization which having a value
+	like bearer followed by some base64 code.
+	
+5. delete keyword:
+
+	while creating routes for removing a category or product we can't use delete word as our controller function.
+	
+6. CORS:
+
+	 "blocked by CORS policy: The ‘Access-Control-Allow-Origin’" error occured when request to the api and it was printed on the console.
+	 So for overcoming this situation i installed a npm package called cors and use it as app.use(cors())
+
+7. errors in wrapping components in the frontend:
+
+	To overcome this situation i used "BrowserRouter" from "react-router-dom".
+	
+8. errors in updating purchase history for an authenticated user.
+
+and many more...
+
+
+So, I expect that this small documentation will help you to understand my appraoch and difficulties, Thanks for your time... 
